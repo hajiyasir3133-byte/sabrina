@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabrina – Graphic Designer</title>
+    <title>Sabrina Sultani – Graphic Designer</title>
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>" type="image/svg+xml">
@@ -1263,21 +1263,32 @@
     <section class="about-section section-padding" id="about">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 reveal">
+                <div class="col-lg-6 reveal mt-1">
                     <div class="about-card">
                         <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=400&fit=crop" 
                              alt="About Sabrina" 
                              class="about-image">
                         <h3 class="section-title">About Me</h3>
                         <p class="about-text">
-                            I'm Sabrina, a passionate graphic designer with over 5 years of experience creating compelling visual designs for brands worldwide. I specialize in logo design, brand identity, UI/UX design, and print materials. My approach combines creativity with strategic thinking to deliver designs that not only look beautiful but also achieve business objectives.
+                            I'm Sabrina, a passionate graphic designer with over  <span class="years" id="experience"><script>
+    const startYear = 2025; 
+    const currentYear = new Date().getFullYear();
+
+    let experience = (currentYear - startYear) + 1;
+
+    if(experience < 1){
+        experience = 0;
+    }
+
+    document.getElementById("experience").innerHTML = experience + " Years Experience";
+</script></span> years of experience creating compelling visual designs for brands worldwide. I specialize in logo design, brand identity, UI/UX design, and print materials. My approach combines creativity with strategic thinking to deliver designs that not only look beautiful but also achieve business objectives.
                         </p>
                         <p class="about-text">
                             I believe in the power of design to transform businesses and create meaningful connections with audiences. Every project is an opportunity to tell a unique story through visual elements.
                         </p>
                     </div>
                 </div>
-                <div class="col-lg-6 reveal">
+                <div class="col-lg-6 reveal mt-1">
                     <div class="about-card">
                         <h3 class="section-title">My Skills</h3>
                         
@@ -1435,7 +1446,7 @@
             </div>
             
             <div class="row">
-                <div class="col-md-6 col-lg-3 reveal">
+                <div class="col-md-6 col-lg-3 reveal mt-1">
                     <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-pen-nib"></i>
@@ -1447,7 +1458,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-3 reveal">
+                <div class="col-md-6 col-lg-3 reveal mt-1">
                     <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-id-card"></i>
@@ -1459,7 +1470,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-3 reveal">
+                <div class="col-md-6 col-lg-3 reveal mt-1">
                     <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-laptop-code"></i>
@@ -1471,7 +1482,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6 col-lg-3 reveal">
+                <div class="col-md-6 col-lg-3 reveal mt-1">
                     <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-print"></i>
@@ -1506,14 +1517,14 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="testimonial-card">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
+                            <img src="assets/img/user.png" 
                                  alt="Client 1" 
                                  class="testimonial-image">
                             <p class="testimonial-quote">
-                                Sabrina transformed our brand identity completely. Her attention to detail and creative vision exceeded all expectations. The new logo and brand materials have significantly improved our market presence.
+                                Sabrina transformed my brand identity completely. Her attention to detail and creative vision exceeded all expectations. The new logo and brand materials have significantly improved our market presence.
                             </p>
-                            <h4 class="testimonial-author">James Mitchell</h4>
-                            <span class="testimonial-company">CEO, TechStart Inc.</span>
+                            <h4 class="testimonial-author">Yasir Ehsas</h4>
+                            <span class="testimonial-company">Expert Software Eng</span>
                         </div>
                     </div>
                     
@@ -1565,7 +1576,7 @@
                             </div>
                             <div class="contact-details">
                                 <h5>Address</h5>
-                                <p>123 Design Street<br>New York, NY 10001</p>
+                                <p>Koti-sangi<br>Kabul, Afghanistan</p>
                             </div>
                         </div>
                         
@@ -1575,7 +1586,7 @@
                             </div>
                             <div class="contact-details">
                                 <h5>Email</h5>
-                                <p>hello@sabrinadesign.com</p>
+                                <p>sabrinasultani2006@gmail.com</p>
                             </div>
                         </div>
                         
@@ -1585,7 +1596,7 @@
                             </div>
                             <div class="contact-details">
                                 <h5>Phone</h5>
-                                <p>+1 (555) 123-4567</p>
+                                <p>+93 744 746 383</p>
                             </div>
                         </div>
                         
@@ -1594,8 +1605,8 @@
                                 <i class="fab fa-instagram"></i>
                             </div>
                             <div class="contact-details">
-                                <h5>Instagram</h5>
-                                <p>@sabrina_designs</p>
+                                <h5>User Name</h5>
+                                <p>Sabrina Sultani</p>
                             </div>
                         </div>
                     </div>
@@ -1686,15 +1697,15 @@
                     <h4 class="footer-title">Contact Info</h4>
                     <div class="footer-contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>123 Design Street, NY</span>
+                        <span>Based On Kabul, Afghanistan</span>
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>hello@sabrinadesign.com</span>
+                        <span>sabrinasultani2006@gmail.com</span>
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-phone"></i>
-                        <span>+1 (555) 123-4567</span>
+                        <span>+93 744 746 383</span>
                     </div>
                 </div>
             </div>
@@ -1852,3 +1863,4 @@
     </script>
 </body>
 </html>
+
