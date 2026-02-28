@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabrina – Graphic Designer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>" type="image/svg+xml">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    
+    <style>
+        /* ============================================
+           CSS VARIABLES & BASE STYLES
+           ============================================ */
+        :root {
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #415a77;
+            --highlight: #778da9;
+            --light: #e0e1dd;
+            --gradient-start: #1e3a5f;
+            --gradient-end: #0d1b2a;
+            --glow-blue: rgba(65, 105, 225, 0.3);
+            --white: #ffffff;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--primary);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           3D BACKGROUND ELEMENTS
+           ============================================ */
+        .bg-3d-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-3d {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.15;
+            color: var(--highlight);
+            animation: float3d 20s infinite ease-in-out;
+            filter: drop-shadow(0 0 20px var(--glow-blue));
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .floating-3d:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 2rem; }
+        .floating-3d:nth-child(2) { top: 20%; right: 10%; animation-delay: -3s; font-size: 4rem; }
+        .floating-3d:nth-child(3) { top: 60%; left: 8%; animation-delay: -5s; font-size: 2.5rem; }
+        .floating-3d:nth-child(4) { top: 80%; right: 5%; animation-delay: -7s; font-size: 3rem; }
+        .floating-3d:nth-child(5) { top: 40%; left: 15%; animation-delay: -9s; font-size: 2rem; }
+        .floating-3d:nth-child(6) { top: 70%; right: 15%; animation-delay: -11s; font-size: 2.8rem; }
+
+        @keyframes float3d {
+            0%, 100% {
+                transform: translateY(0) rotateX(0) rotateY(0) rotateZ(0);
+            }
+            25% {
+                transform: translateY(-30px) rotateX(15deg) rotateY(10deg) rotateZ(5deg);
+            }
+            50% {
+                transform: translateY(-15px) rotateX(-10deg) rotateY(-15deg) rotateZ(-5deg);
+            }
+            75% {
+                transform: translateY(-40px) rotateX(20deg) rotateY(5deg) rotateZ(10deg);
+            }
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+            animation: glowPulse 8s infinite ease-in-out;
+        }
+
+        .glow-orb:nth-child(1) { width: 400px; height: 400px; top: 10%; left: -10%; animation-delay: 0s; }
+        .glow-orb:nth-child(2) { width: 300px; height: 300px; top: 50%; right: -5%; animation-delay: -3s; }
+        .glow-orb:nth-child(3) { width: 250px; height: 250px; bottom: 10%; left: 30%; animation-delay: -5s; }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        /* ============================================
+           NAVBAR STYLES
+           ============================================ */
+        .navbar-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .navbar-custom.scrolled {
+            background: rgba(13, 27, 42, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+        }
+
+        .navbar-brand-custom {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--white) !important;
+            letter-spacing: 3px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .navbar-brand-custom::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--highlight), var(--accent), var(--highlight));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand-custom:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-link-custom {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--light) !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 20px !important;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link-custom::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--highlight), var(--accent));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link-custom:hover {
+            color: var(--white) !important;
+        }
+
+        .nav-link-custom:hover::before {
+            width: 60%;
+        }
+
+        .social-icon-custom {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light) !important;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .social-icon-custom:hover {
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            color: var(--white) !important;
+            transform: translateY(-3px) rotate(360deg);
+            box-shadow: 0 10px 30px rgba(65, 105, 225, 0.4);
+        }
+
+        /* Mobile Offcanvas */
+        .offcanvas-custom {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            backdrop-filter: blur(20px);
+        }
+
+        .offcanvas-header-custom {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-close-custom {
+            filter: invert(1);
+            opacity: 0.7;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 120px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 50%, var(--primary) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--highlight);
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--white) 0%, var(--highlight) 50%, var(--white) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--highlight);
+            margin-bottom: 35px;
+            max-width: 500px;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn-cta {
+            padding: 16px 40px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+            opacity: 0;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--highlight), var(--accent));
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(65, 105, 225, 0.4);
+            color: var(--white);
+        }
+
+        .btn-cta:hover::before {
+            left: 0;
+        }
+
+        .hero-image-container {
+            position: relative;
+            animation: fadeInRight 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 450px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 30px;
+            transform: rotateY(-5deg) rotateX(5deg);
+            box-shadow: 
+                30px 30px 60px rgba(0, 0, 0, 0.4),
+                -5px -5px 30px rgba(65, 105, 225, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .hero-image:hover {
+            transform: rotateY(0) rotateX(0);
+            box-shadow: 
+                40px 40px 80px rgba(0, 0, 0, 0.5),
+                -10px -10px 40px rgba(65, 105, 225, 0.3);
+        }
+
+        .hero-image-decoration {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--accent);
+            border-radius: 30px;
+            z-index: -1;
+            transition: all 0.5s ease;
+        }
+
+        .hero-image-container:hover .hero-image-decoration {
+            top: -30px;
+            right: -30px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ============================================
+           SECTION COMMON STYLES
+           ============================================ */
+        .section-padding {
+            padding: 100px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--highlight);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .section-description {
+            color: var(--highlight);
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           ABOUT SECTION
+           ============================================ */
+        .about-section {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            height: 100%;
+            transition: all 0.4s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(65, 105, 225, 0.2);
+            border-color: var(--accent);
+        }
+
+        .about-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-text {
+            color: var(--light);
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .skill-item {
+            margin-bottom: 20px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .skill-percent {
+            color: var(--highlight);
+            font-weight: 600;
+        }
+
+        .skill-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--highlight));
+            border-radius: 10px;
+            transition: width 1.5s ease;
+            width: 0;
+        }
+
+        /* ============================================
+           PROJECTS SECTION
+           ============================================ */
+        .projects-section {
+            background: var(--secondary);
+        }
+
+        .project-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(13, 27, 42, 0.9) 100%);
+            opacity: 0;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-category {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--highlight);
+            margin-bottom: 5px;
+        }
+
+        .project-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 0;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+
+        .project-card:hover::before {
+            opacity: 0.1;
+        }
+
+        /* ============================================
+           SERVICES SECTION
+           ============================================ */
+        .services-section {
+            background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            height: 100%;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(65, 105, 225, 0.3);
+        }
+
+        .service-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            margin: 0 auto 25px;
+            font-size: 2rem;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 10px 30px rgba(65, 105, 225, 0.5);
+        }
+
+        .service-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-description {
+            color: var(--highlight);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           TESTIMONIALS SECTION
+           ============================================ */
+        .testimonials-section {
+            background: var(--primary);
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 15px;
+            text-align: center;
+        }
+
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent);
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            color: var(--light);
+            font-style: italic;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-author {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-company {
+            font-size: 0.9rem;
+            color: var(--highlight);
+        }
+
+        .carousel-indicators-custom button {
+            width: 12px !important;
+            height: 12px !important;
+            border-radius: 50% !important;
+            background-color: var(--accent) !important;
+            border: none !important;
+            margin: 0 5px !important;
+        }
+
+        .carousel-indicators-custom button.active {
+            background-color: var(--highlight) !important;
+        }
+
+        /* ============================================
+           CONTACT SECTION
+           ============================================ */
+        .contact-section {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .contact-info-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(65, 105, 225, 0.2);
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .contact-info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            margin-right: 20px;
+            font-size: 1.2rem;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .contact-details h5 {
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .contact-details p {
+            color: var(--highlight);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .contact-form-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label-custom {
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 10px;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .form-control-custom {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: var(--light);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-custom:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(65, 105, 225, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-control-custom::placeholder {
+            color: var(--highlight);
+            opacity: 0.7;
+        }
+
+        textarea.form-control-custom {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            color: var(--white);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(65, 105, 225, 0.4);
+        }
+
+        /* ============================================
+           FOOTER SECTION
+           ============================================ */
+        .footer-section {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231b263b' fill-opacity='1' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+            background-size: cover;
+            transform: rotate(180deg);
+            margin-top: -1px;
+        }
+
+        .footer-content {
+            padding-top: 100px;
+            padding-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-description {
+            color: var(--highlight);
+            margin-bottom: 25px;
+            max-width: 300px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light) !important;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .footer-social-link:hover {
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            color: var(--white) !important;
+            transform: translateY(-5px);
+        }
+
+        .footer-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--highlight);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--highlight);
+        }
+
+        .footer-contact-item i {
+            margin-right: 12px;
+            color: var(--highlight);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 25px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .footer-copyright {
+            color: var(--highlight);
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           RESPONSIVE STYLES
+           ============================================ */
+        @media (max-width: 991px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-image {
+                max-width: 350px;
+                height: 400px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .section-padding {
+                padding: 70px 0;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-section {
+                padding: 100px 0 60px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .hero-image {
+                max-width: 100%;
+                height: 350px;
+                margin-top: 40px;
+            }
+            
+            .hero-image-decoration {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-padding {
+                padding: 60px 0;
+            }
+            
+            .about-card, .service-card, .contact-form-card, .contact-info-card {
+                padding: 30px;
+            }
+            
+            .service-card {
+                margin-bottom: 20px;
+            }
+            
+            .testimonial-card {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 12px;
+                letter-spacing: 2px;
+            }
+            
+            .navbar-brand-custom {
+                font-size: 22px;
+            }
+            
+            .btn-cta {
+                padding: 14px 30px;
+                font-size: 12px;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .floating-3d {
+                font-size: 1.5rem;
+            }
+            
+            .project-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 3D Background Elements -->
+    <div class="bg-3d-container">
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+        <div class="glow-orb"></div>
+        
+        <div class="floating-3d">
+            <i class="fas fa-pen-nib"></i>
+        </div>
+        <div class="floating-3d">
+            <i class="fas fa-palette"></i>
+        </div>
+        <div class="floating-3d">
+            <i class="fas fa-shapes"></i>
+        </div>
+        <div class="floating-3d">
+            <i class="fas fa-layer-group"></i>
+        </div>
+        <div class="floating-3d">
+            <i class="fas fa-font"></i>
+        </div>
+        <div class="floating-3d">
+            <i class="fas fa-cube"></i>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom" id="navbar">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand-custom" href="#">Sabrina</a>
+            
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <i class="fas fa-bars-staggered"></i>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link-custom nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-custom nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Social Icons (Desktop) -->
+            <div class="d-none d-lg-flex align-items-center">
+                <a href="https://instagram.com" target="_blank" class="social-icon-custom">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:hello@sabrina.com" class="social-icon-custom">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Offcanvas -->
+    <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header offcanvas-header-custom">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="font-family: var(--font-heading); color: var(--white); font-size: 1.5rem;">Sabrina</h5>
+            <button type="button" class="btn-close btn-close-custom" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                <li class="nav-item">
+                    <a class="nav-link-custom nav-link text-center" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-custom nav-link text-center" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-custom nav-link text-center" href="#projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-custom nav-link text-center" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-custom nav-link text-center" href="#testimonials">Testimonials</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-custom nav-link text-center" href="#contact">Contact</a>
+                </li>
+            </ul>
+            <div class="d-flex justify-content-center mt-4">
+                <a href="https://instagram.com" target="_blank" class="social-icon-custom">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:hello@sabrina.com" class="social-icon-custom">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <span class="hero-subtitle">Graphic Designer</span>
+                        <h1 class="hero-title">
+                            <span class="gradient-text">Creative Design</span>
+                            <br>Solutions
+                        </h1>
+                        <p class="hero-description">
+                            Crafting stunning visual experiences that transform brands and captivate audiences. Let's bring your creative vision to life with elegant design solutions.
+                        </p>
+                        <a href="#contact" class="btn-cta">Get Started</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image-container">
+                        <div class="hero-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop&crop=face" 
+                                 alt="Sabrina - Graphic Designer" 
+                                 class="hero-image">
+                            <div class="hero-image-decoration"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section section-padding" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 reveal">
+                    <div class="about-card">
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=400&fit=crop" 
+                             alt="About Sabrina" 
+                             class="about-image">
+                        <h3 class="section-title">About Me</h3>
+                        <p class="about-text">
+                            I'm Sabrina, a passionate graphic designer with over 5 years of experience creating compelling visual designs for brands worldwide. I specialize in logo design, brand identity, UI/UX design, and print materials. My approach combines creativity with strategic thinking to deliver designs that not only look beautiful but also achieve business objectives.
+                        </p>
+                        <p class="about-text">
+                            I believe in the power of design to transform businesses and create meaningful connections with audiences. Every project is an opportunity to tell a unique story through visual elements.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6 reveal">
+                    <div class="about-card">
+                        <h3 class="section-title">My Skills</h3>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Logo Design</span>
+                                <span class="skill-percent">95%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="95"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Brand Identity</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="90"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">UI/UX Design</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="85"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Print Design</span>
+                                <span class="skill-percent">92%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="92"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Adobe Creative Suite</span>
+                                <span class="skill-percent">98%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" data-width="98"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section section-padding" id="projects">
+        <div class="container">
+            <div class="text-center reveal">
+                <span class="section-subtitle">Portfolio</span>
+                <h2 class="section-title">My Projects</h2>
+                <p class="section-description mx-auto">
+                    Explore my collection of creative projects spanning various industries and design disciplines.
+                </p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&h=400&fit=crop" 
+                             alt="Logo Design Project" 
+                             class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-category">Logo Design</span>
+                            <h4 class="project-title">Brand Logo</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&h=400&fit=crop" 
+                             alt="Poster Design Project" 
+                             class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-category">Poster Design</span>
+                            <h4 class="project-title">Event Poster</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=400&fit=crop" 
+                             alt="Branding Project" 
+                             class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-category">Branding</span>
+                            <h4 class="project-title">Brand Identity</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" 
+                             alt="Social Media Design" 
+                             class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-category">Social Media</span>
+                            <h4 class="project-title">Instagram Campaign</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop" 
+                             alt="UI Design Project" 
+                             class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-category">UI/UX Design</span>
+                            <h4 class="project-title">App Interface</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&h=400&fit=crop" 
+                             alt="Print Design Project" 
+                             class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-category">Print Design</span>
+                            <h4 class="project-title">Marketing Materials</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section section-padding" id="services">
+        <div class="container">
+            <div class="text-center reveal">
+                <span class="section-subtitle">What I Offer</span>
+                <h2 class="section-title">My Services</h2>
+                <p class="section-description mx-auto">
+                    Professional design services tailored to elevate your brand and achieve your business goals.
+                </p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-pen-nib"></i>
+                        </div>
+                        <h3 class="service-title">Logo Design</h3>
+                        <p class="service-description">
+                            Unique, memorable logos that capture your brand essence and leave a lasting impression.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <h3 class="service-title">Brand Identity</h3>
+                        <p class="service-description">
+                            Complete brand visual systems including colors, typography, and brand guidelines.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="service-title">UI/UX Design</h3>
+                        <p class="service-description">
+                            Intuitive, user-friendly interfaces that enhance user experience and drive engagement.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 reveal">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-print"></i>
+                        </div>
+                        <h3 class="service-title">Print Design</h3>
+                        <p class="service-description">
+                            Professional print materials from business cards to large format designs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section section-padding" id="testimonials">
+        <div class="container">
+            <div class="text-center reveal">
+                <span class="section-subtitle">Client Feedback</span>
+                <h2 class="section-title">Testimonials</h2>
+                <p class="section-description mx-auto">
+                    What my clients say about working with me.
+                </p>
+            </div>
+            
+            <div id="testimonialCarousel" class="carousel slide reveal" data-bs-ride="carousel">
+                <div class="carousel-indicators carousel-indicators-custom">
+                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+                </div>
+                
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="testimonial-card">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
+                                 alt="Client 1" 
+                                 class="testimonial-image">
+                            <p class="testimonial-quote">
+                                Sabrina transformed our brand identity completely. Her attention to detail and creative vision exceeded all expectations. The new logo and brand materials have significantly improved our market presence.
+                            </p>
+                            <h4 class="testimonial-author">James Mitchell</h4>
+                            <span class="testimonial-company">CEO, TechStart Inc.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <div class="testimonial-card">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" 
+                                 alt="Client 2" 
+                                 class="testimonial-image">
+                            <p class="testimonial-quote">
+                                Working with Sabrina was an absolute pleasure. She understood our vision immediately and delivered stunning designs that perfectly captured our brand essence. Highly recommend!
+                            </p>
+                            <h4 class="testimonial-author">Sarah Johnson</h4>
+                            <span class="testimonial-company">Founder, Bloom Bakery</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section section-padding" id="contact">
+        <div class="container">
+            <div class="text-center reveal">
+                <span class="section-subtitle">Get In Touch</span>
+                <h2 class="section-title">Contact Me</h2>
+                <p class="section-description mx-auto">
+                    Have a project in mind? Let's discuss how we can work together to bring your vision to life.
+                </p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-5 reveal">
+                    <div class="contact-info-card">
+                        <div class="contact-info-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Address</h5>
+                                <p>123 Design Street<br>New York, NY 10001</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Email</h5>
+                                <p>hello@sabrinadesign.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Phone</h5>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Instagram</h5>
+                                <p>@sabrina_designs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7 reveal">
+                    <div class="contact-form-card">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label-custom">Your Name</label>
+                                        <input type="text" class="form-control-custom" placeholder="John Doe" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label-custom">Email Address</label>
+                                        <input type="email" class="form-control-custom" placeholder="john@example.com" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label-custom">Your Message</label>
+                                <textarea class="form-control-custom" placeholder="Tell me about your project..." rows="5" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="footer-wave"></div>
+        <div class="container footer-content">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <span class="footer-logo">Sabrina</span>
+                    <p class="footer-description">
+                        Creating beautiful visual experiences that help brands stand out and connect with their audience.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com" target="_blank" class="footer-social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="footer-social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="footer-social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://dribbble.com" target="_blank" class="footer-social-link">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h4 class="footer-title">Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services">Logo Design</a></li>
+                        <li><a href="#services">Brand Identity</a></li>
+                        <li><a href="#services">UI/UX Design</a></li>
+                        <li><a href="#services">Print Design</a></li>
+                        <li><a href="#services">Social Media</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>123 Design Street, NY</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>hello@sabrinadesign.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2026 Sabrina – Graphic Designer. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================
+        // SMOOTH SCROLLING FOR NAV LINKS
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close offcanvas on mobile
+                    const offcanvas = document.querySelector('.offcanvas.show');
+                    if (offcanvas) {
+                        bootstrap.Offcanvas.getInstance(offcanvas).hide();
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // SCROLL REVEAL ANIMATION
+        // ============================================
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+            
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Initial check
+
+        // ============================================
+        // SKILL PROGRESS ANIMATION
+        // ============================================
+        const skillBars = document.querySelectorAll('.skill-progress-bar');
+        
+        const animateSkills = () => {
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                const barTop = bar.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (barTop < windowHeight - 100) {
+                    bar.style.width = width + '%';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateSkills);
+        animateSkills(); // Initial check
+
+        // ============================================
+        // PARALLAX EFFECT FOR 3D ELEMENTS
+        // ============================================
+        const floatingElements = document.querySelectorAll('.floating-3d');
+        
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            
+            floatingElements.forEach((element, index) => {
+                const speed = (index + 1) * 0.1;
+                element.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // ============================================
+        // CONTACT FORM SUBMISSION
+        // ============================================
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = new FormData(contactForm);
+            const name = formData.get('0');
+            
+            // Show success message (in production, you'd send to server)
+            alert('Thank you for your message! I will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // ============================================
+        // 3D TILT EFFECT FOR CARDS
+        // ============================================
+        const cards = document.querySelectorAll('.project-card, .service-card, .about-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // ============================================
+        // ADD ACTIVE CLASS TO CURRENT YEAR IN FOOTER
+        // ============================================
+        document.querySelector('.footer-copyright').innerHTML = 
+            `&copy; ${new Date().getFullYear()} Sabrina – Graphic Designer. All Rights Reserved.`;
+    </script>
+</body>
+</html>
